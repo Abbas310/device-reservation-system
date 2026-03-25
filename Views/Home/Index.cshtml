@@ -1,0 +1,126 @@
+﻿@{
+    ViewBag.Title = "Devices";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Devices</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/DevicesStyle.css" />
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Home/Index">Vanrise</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a href="/Home/Index">Devices</a></li>
+                <li><a href="/Home/Clients">Clients</a></li>
+                <li><a href="/Home/PhoneNumbers">Phone Numbers</a></li>
+                <li><a href="/Home/Reservations">Reservations</a></li>
+                <li><a href="/Home/ClientsReport">Clients Report</a></li>
+                <li><a href="/Home/DevicesReport">Devices Report</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <div ng-app="deviceApp" ng-controller="DeviceController">
+
+        <h1>Devices</h1>
+
+        <div class="controls">
+            <input type="text" placeholder="Device name" ng-model="deviceName" />
+
+            <button class="btn btn-primary" ng-click="searchDevices()">Search</button>
+            <button class="btn btn-success" ng-click="openAddModal()">Add</button>
+        </div>
+
+        <table class="table table-bordered device-table">
+            <thead>
+                <tr>
+                    <th style="width: 80px;">ID</th>
+                    <th>Name</th>
+                    <th style="width: 200px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="d in filteredDevices">
+                    <td>[[d.Id]]</td>
+                    <td>[[d.Name]]</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" ng-click="openEditModal(d)">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger btn-sm" ng-click="openDeleteModal(d)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add/Edit Modal -->
+        <script type="text/ng-template" id="deviceModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    [[ isEdit ? 'Edit Device' : 'Add Device' ]]
+                </h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Device Name</label>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Enter device name"
+                           ng-model="device.Name"
+                           autofocus />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-primary"
+                        ng-click="save()"
+                        ng-disabled="!device.Name || !device.Name.trim()">
+                    Save
+                </button>
+            </div>
+        </script>
+
+        <!-- Delete Confirm Modal -->
+        <script type="text/ng-template" id="deleteConfirmModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Delete</h3>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to delete: <b>[[device.Name]]</b> ?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-danger" ng-click="confirm()">Delete</button>
+            </div>
+        </script>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Scripts/DevicesScript.js"></script>
+
+</body>
+</html>

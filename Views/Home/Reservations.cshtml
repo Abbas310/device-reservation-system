@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Reservations";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Reservations</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/DevicesStyle.css" />
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Home/Index">Vanrise</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a href="/Home/Index">Devices</a></li>
+                <li><a href="/Home/Clients">Clients</a></li>
+                <li><a href="/Home/PhoneNumbers">Phone Numbers</a></li>
+                <li><a href="/Home/Reservations">Reservations</a></li>
+                <li><a href="/Home/ClientsReport">Clients Report</a></li>
+                <li><a href="/Home/DevicesReport">Devices Report</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div ng-app="resApp" ng-controller="ReservationsController" class="container" style="margin-top:30px;">
+
+        <h1>Phone Number Reservations</h1>
+
+        <div class="controls" style="margin-bottom:15px;">
+
+
+            <!-- optional: we will keep it simple now using existing list filter by ID -->
+            <select class="form-control" style="width:220px; display:inline-block; margin-left:6px;"
+                    ng-model="selectedClientId"
+                    ng-options="c.Id as c.Name for c in clients">
+                <option value="">All Clients</option>
+            </select>
+
+            <!-- Phone number filter directive -->
+            <phone-number-selector ng-model="selectedPhoneNumberId" placeholder="All Phone Numbers"></phone-number-selector>
+
+            <button type="button" class="btn btn-primary" style="margin-left:6px;" ng-click="search()">Search</button>
+            <button type="button" class="btn btn-default" style="margin-left:6px;" ng-click="reset()">Reset</button>
+
+        </div>
+
+        <table class="table table-bordered device-table" style="width:1000px;">
+            <thead>
+                <tr>
+                    <th style="width:80px;">ID</th>
+                    <th>Client</th>
+                    <th style="width:160px;">Phone Number</th>
+                    <th style="width:140px;">BED</th>
+                    <th style="width:140px;">EED</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="r in reservations">
+                    <td>[[r.Id]]</td>
+                    <td>[[r.ClientName]]</td>
+                    <td>[[r.PhoneNumber]]</td>
+                    <td>[[ (r.BED | date:'yyyy-MM-dd') ]]</td>
+                    <td>[[ r.EED ? (r.EED | date:'yyyy-MM-dd') : '' ]]</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- No Add / Edit buttons by requirement -->
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="~/Scripts/directives/deviceSelector.js"></script>
+    <script src="~/Scripts/directives/clientTypeSelector.js"></script>
+    <script src="~/Scripts/directives/phoneNumberSelector.js"></script>
+
+    <script src="~/Scripts/ReservationsScript.js"></script>
+
+</body>
+</html>

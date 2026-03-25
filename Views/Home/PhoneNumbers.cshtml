@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "Phone Numbers";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Phone Numbers</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/DevicesStyle.css" />
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Home/Index">Vanrise</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a href="/Home/Index">Devices</a></li>
+                <li><a href="/Home/Clients">Clients</a></li>
+                <li><a href="/Home/PhoneNumbers">Phone Numbers</a></li>
+                <li><a href="/Home/Reservations">Reservations</a></li>
+                <li><a href="/Home/ClientsReport">Clients Report</a></li>
+                <li><a href="/Home/DevicesReport">Devices Report</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div ng-app="phoneApp" ng-controller="PhoneController" class="container" style="margin-top:30px;">
+
+        <h1>Phone Numbers</h1>
+
+        <div class="controls" style="margin-bottom:15px;">
+            <input type="text" placeholder="Number" ng-model="searchNumber" />
+
+            <device-selector ng-model="selectedDeviceId" placeholder="All Devices"></device-selector>
+
+
+            <button class="btn btn-primary" style="margin-left:6px;" ng-click="search()">Search</button>
+            <button class="btn btn-success" style="margin-left:6px;" ng-click="openAdd()">Add</button>
+        </div>
+
+        <table class="table table-bordered device-table" style="width:900px;">
+            <thead>
+                <tr>
+                    <th style="width:80px;">ID</th>
+                    <th style="width:220px;">Number</th>
+                    <th>Device</th>
+                    <th style="width:220px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in phones">
+                    <td>[[p.Id]]</td>
+                    <td>[[p.Number]]</td>
+                    <td>[[p.DeviceName]]</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" ng-click="openEdit(p)">Edit</button>
+                        <button class="btn btn-danger btn-sm" ng-click="openDelete(p)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add/Edit Modal -->
+        <script type="text/ng-template" id="phoneModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">[[isEdit ? 'Edit Phone' : 'Add Phone']]</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Number</label>
+                    <input class="form-control" ng-model="phone.Number" />
+                </div>
+
+                <div class="form-group">
+                    <label>Device</label>
+                    <device-selector ng-model="phone.DeviceId" placeholder="Select device..."></device-selector>
+
+
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-primary" ng-click="save()">Save</button>
+            </div>
+        </script>
+
+        <!-- Delete Confirm Modal -->
+        <script type="text/ng-template" id="deletePhoneModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Delete</h3>
+            </div>
+            <div class="modal-body">
+                Delete number: <b>[[phone.Number]]</b> ?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button class="btn btn-danger" ng-click="confirm()">Delete</button>
+            </div>
+        </script>
+
+    </div>
+
+    <!-- Scripts MUST be after the content -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Scripts/directives/deviceSelector.js"></script>
+    <script src="~/Scripts/PhoneNumbersScript.js"></script>
+
+</body>
+</html>

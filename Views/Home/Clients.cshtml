@@ -1,0 +1,210 @@
+﻿@{
+    ViewBag.Title = "Clients";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Clients</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/DevicesStyle.css" />
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Home/Index">Vanrise</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a href="/Home/Index">Devices</a></li>
+                <li><a href="/Home/Clients">Clients</a></li>
+                <li><a href="/Home/PhoneNumbers">Phone Numbers</a></li>
+                <li><a href="/Home/Reservations">Reservations</a></li>
+                <li><a href="/Home/ClientsReport">Clients Report</a></li>
+                <li><a href="/Home/DevicesReport">Devices Report</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div ng-app="clientsApp" ng-controller="ClientsController" class="container" style="margin-top:30px;">
+
+        <h1>Clients</h1>
+
+        <!-- Success message -->
+        <div class="alert alert-success"
+             ng-if="successMessage"
+             style="margin-top:10px;">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span ng-bind="successMessage"></span>
+        </div>
+
+        <div class="controls" style="margin-bottom:15px;">
+            <input type="text" placeholder="Client name" ng-model="searchName" />
+
+            <client-type-selector ng-model="selectedType" placeholder="All Types"></client-type-selector>
+
+            <button type="button" class="btn btn-primary" style="margin-left:6px;" ng-click="searchClients()">Search</button>
+            <button type="button" class="btn btn-success" style="margin-left:6px;" ng-click="openAddModal()">Add</button>
+        </div>
+
+        <table class="table table-bordered device-table" style="width:900px;">
+            <thead>
+                <tr>
+                    <th style="width:80px;">ID</th>
+                    <th>Name</th>
+                    <th style="width:140px;">Type</th>
+                    <th style="width:160px;">Birth Date</th>
+                    <th style="width:220px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="c in clients">
+                    <td>[[c.Id]]</td>
+                    <td>[[c.Name]]</td>
+                    <td>[[c.Type == 1 ? 'Individual' : 'Organization']]</td>
+                    <td>[[c.BirthDate ? c.BirthDate.substring(0,10) : '' ]]</td>
+                    <td style="white-space:nowrap;">
+                        <button type="button" class="btn btn-warning btn-sm" ng-click="openEditModal(c)">Edit</button>
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="openDeleteModal(c)">Delete</button>
+
+                        <button type="button" class="btn btn-primary btn-sm"
+                                ng-click="openReserveModal(c)"
+                                ng-disabled="!hasAvailablePhones">
+                            Reserve Phone Number
+                        </button>
+
+                        <button type="button" class="btn btn-danger btn-sm" style="margin-left:6px;"
+                                ng-click="openUnreserveModal(c)"
+                                ng-disabled="!c.HasActiveReservation">
+                            Unreserve Phone Number
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add/Edit Client Modal -->
+        <script type="text/ng-template" id="clientModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">[[ isEdit ? 'Edit Client' : 'Add Client' ]]</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" ng-model="client.Name" />
+                </div>
+
+                <div class="form-group">
+                    <label>Type</label>
+                    <select class="form-control" ng-model="client.Type">
+                        <option value="">Select type...</option>
+                        <option value="1">Individual</option>
+                        <option value="2">Organization</option>
+                    </select>
+                </div>
+
+                <div class="form-group" ng-if="client.Type == 1">
+                    <label>Birth Date</label>
+                    <input type="date" class="form-control" ng-model="form.birthDateModel" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-primary" ng-click="save()">
+                    Save
+                </button>
+            </div>
+        </script>
+
+        <!-- Delete Confirm Modal -->
+        <script type="text/ng-template" id="deleteClientModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Delete</h3>
+            </div>
+            <div class="modal-body">
+                Delete client: <b>[[client.Name]]</b> ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-danger" ng-click="confirm()">Delete</button>
+            </div>
+        </script>
+
+        <!-- Reserve Phone Modal -->
+        <script type="text/ng-template" id="reservePhoneModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Reserve Phone Number</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <available-phone-number-selector ng-model="reservation.phoneNumberId"
+                                                     placeholder="Select phone number...">
+                    </available-phone-number-selector>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="save()"
+                        ng-disabled="!reservation.phoneNumberId">
+                    Save
+                </button>
+            </div>
+        </script>
+
+        <!-- Unreserve Phone Modal -->
+        <script type="text/ng-template" id="unreservePhoneModal.html">
+            <div class="modal-header">
+                <h3 class="modal-title">Unreserve Phone Number</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Reserved Phone Number</label>
+                    <select class="form-control"
+                            ng-model="selectedReservationId"
+                            ng-options="r.Id as r.PhoneNumber for r in reservations">
+                        <option value="">Select reserved phone number...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-danger"
+                        ng-click="confirm()"
+                        ng-disabled="!selectedReservationId">
+                    Yes, Unreserve
+                </button>
+            </div>
+        </script>
+
+    </div>
+
+    <!-- Scripts (directives first, then page controller) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="~/Scripts/directives/deviceSelector.js"></script>
+    <script src="~/Scripts/directives/clientTypeSelector.js"></script>
+    <script src="~/Scripts/directives/phoneNumberSelector.js"></script>
+    <script src="~/Scripts/directives/availablePhoneNumberSelector.js"></script>
+
+    <script src="~/Scripts/ClientsScript.js"></script>
+
+</body>
+</html>
