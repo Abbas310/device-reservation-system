@@ -5,7 +5,7 @@
     });
 
 clientsApp.controller("ClientsController", function ($scope, $http, $modal, $timeout) {
-
+    $scope.isEditor = (window.currentUserRole === "Editor");
     $scope.successMessage = "";
     $scope.hasAvailablePhones = false;
 

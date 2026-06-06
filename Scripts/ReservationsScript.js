@@ -5,7 +5,7 @@
     });
 
 resApp.controller("ReservationsController", function ($scope, $http) {
-
+    $scope.isEditor = (window.currentUserRole === "Editor");
     $scope.reservations = [];
     $scope.clients = [];
 

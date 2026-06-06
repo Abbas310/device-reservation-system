@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login / Register - Vanrise</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .auth-container {
+            display: flex;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 800px;
+            max-width: 100%;
+        }
+
+        .form-section {
+            padding: 40px;
+            flex: 1;
+        }
+
+        .login-section {
+            border-right: 1px solid #eee;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="form-section login-section">
+            <h2>Sign In</h2>
+            @if (ViewBag.LoginError != null)
+            {<div class="alert alert-danger">@ViewBag.LoginError</div>}
+
+            <form action="/Account/Login" method="post">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            </form>
+        </div>
+
+        <div class="form-section">
+            <h2>Register</h2>
+            @if (ViewBag.RegError != null)
+            {<div class="alert alert-danger">@ViewBag.RegError</div>}
+            @if (ViewBag.RegSuccess != null)
+            {<div class="alert alert-success">@ViewBag.RegSuccess</div>}
+
+            <form action="/Account/Register" method="post">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="regUsername" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="regPassword" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="role" class="form-control">
+                        <option value="ReadOnly">Read Only (View Data)</option>
+                        <option value="Editor">Editor (Add/Edit/Delete)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Create Account</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

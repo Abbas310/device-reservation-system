@@ -5,7 +5,7 @@
     });
 
 phoneApp.controller("PhoneController", function ($scope, $http, $modal) {
-
+    $scope.isEditor = (window.currentUserRole === "Editor");
     $scope.phones = [];
     $scope.searchNumber = "";
     $scope.selectedDeviceId = "";

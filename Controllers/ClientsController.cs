@@ -10,12 +10,12 @@ using Vanrise_Web.Models;
 
 namespace Vanrise_Web.Controllers
 {
+    [Authorize]
     public class ClientsController : ApiController
     {
         private readonly ClientRepository _repo = new ClientRepository();
 
-        // GET /api/clients
-        // GET /api/clients?search=a&type=1
+        
         [HttpGet]
         public IEnumerable<ClientDto> Get(string search = null, int? type = null)
         {
@@ -27,6 +27,7 @@ namespace Vanrise_Web.Controllers
 
         // POST /api/clients
         [HttpPost]
+        [Authorize(Roles = "Editor")]
         public IHttpActionResult Post(ClientDto dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(dto.Name))
@@ -40,6 +41,7 @@ namespace Vanrise_Web.Controllers
 
         // PUT /api/clients/5
         [HttpPut]
+        [Authorize(Roles = "Editor")]
         public IHttpActionResult Put(int id, ClientDto dto)
         {
             if (dto == null || string.IsNullOrWhiteSpace(dto.Name))
@@ -55,6 +57,7 @@ namespace Vanrise_Web.Controllers
 
         // DELETE /api/clients/5
         [HttpDelete]
+        [Authorize(Roles = "Editor")]
         public IHttpActionResult Delete(int id)
         {
             try

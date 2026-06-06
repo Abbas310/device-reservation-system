@@ -7,6 +7,10 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
+<script>
+    // This tells AngularJS what role the logged-in user has
+    window.currentUserRole = '@(User.IsInRole("Editor") ? "Editor" : "ReadOnly")';
+</script>
 <body>
 
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -20,6 +24,7 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li><a href="/Account/Logout">Logout</a></li>
                 </ul>
             </div>
         </div>

@@ -5,7 +5,7 @@ var app = angular.module("deviceApp", ["ui.bootstrap"])
     });
 
 app.controller("DeviceController", function ($scope, $http, $modal) {
-
+    $scope.isEditor = (window.currentUserRole === "Editor");
     $scope.deviceName = "";
     $scope.filteredDevices = [];
 
