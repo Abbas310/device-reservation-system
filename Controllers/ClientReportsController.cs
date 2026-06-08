@@ -9,7 +9,7 @@ namespace Vanrise_Web.Controllers
     {
         private readonly ClientRepository _repo = new ClientRepository();
 
-        // GET /api/clientreports?type=1
+        
         [HttpGet]
         public IEnumerable<ClientReportRowDto> Get(int? type = null)
         {

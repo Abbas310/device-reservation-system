@@ -14,7 +14,7 @@ namespace Vanrise_Web.Data
 
         public List<DeviceReportRowDto> Get(int? deviceId, string status)
         {
-            // normalize status coming from UI: "reserved" / "unreserved" / ""
+            
             string s = string.IsNullOrWhiteSpace(status) ? null : status.Trim().ToLowerInvariant();
 
             var list = new List<DeviceReportRowDto>();

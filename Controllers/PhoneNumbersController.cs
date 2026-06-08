@@ -13,8 +13,7 @@ namespace Vanrise_Web.Controllers
     {
         private readonly PhoneNumberRepository _repo = new PhoneNumberRepository();
 
-        // GET /api/phonenumbers
-        // GET /api/phonenumbers?number=70&deviceId=1
+        
         [HttpGet]
         public IEnumerable<PhoneNumberDto> Get(string number = null, int? deviceId = null)
         {
@@ -24,7 +23,7 @@ namespace Vanrise_Web.Controllers
             return _repo.GetFiltered(number, deviceId);
         }
 
-        // POST /api/phonenumbers   body: { "Number":"70123456", "DeviceId":1 }
+        
         [HttpPost]
         public IHttpActionResult Post(PhoneNumberDto dto)
         {
@@ -37,7 +36,7 @@ namespace Vanrise_Web.Controllers
             return Ok(created);
         }
 
-        // PUT /api/phonenumbers/5
+        
         [HttpPut]
         public IHttpActionResult Put(int id, PhoneNumberDto dto)
         {
@@ -52,7 +51,7 @@ namespace Vanrise_Web.Controllers
             return Ok();
         }
 
-        // DELETE /api/phonenumbers/5
+        
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
@@ -66,7 +65,7 @@ namespace Vanrise_Web.Controllers
                 return Content(HttpStatusCode.Conflict, new { Message = "Cannot delete this phone number because it is used by an existing reservation." });
             }
         }
-        // GET /api/phonenumbers/available
+        
         [HttpGet]
         [Route("api/phonenumbers/available")]
         public IHttpActionResult Available()

@@ -25,7 +25,7 @@ namespace Vanrise_Web.Controllers
             return _repo.GetFiltered(search, type);
         }
 
-        // POST /api/clients
+        
         [HttpPost]
         [Authorize(Roles = "Editor")]
         public IHttpActionResult Post(ClientDto dto)
@@ -39,7 +39,7 @@ namespace Vanrise_Web.Controllers
             return Ok(_repo.Add(dto));
         }
 
-        // PUT /api/clients/5
+        
         [HttpPut]
         [Authorize(Roles = "Editor")]
         public IHttpActionResult Put(int id, ClientDto dto)
@@ -55,7 +55,7 @@ namespace Vanrise_Web.Controllers
             return Ok();
         }
 
-        // DELETE /api/clients/5
+        
         [HttpDelete]
         [Authorize(Roles = "Editor")]
         public IHttpActionResult Delete(int id)
@@ -73,13 +73,13 @@ namespace Vanrise_Web.Controllers
 
         private static DateTime? ParseBirthDate(ClientDto dto)
         {
-            // BirthDate only for Individual
+            
             if (dto.Type != 1) return null;
 
-            // If model binding already populated it, keep it
+            
             if (dto.BirthDate.HasValue) return dto.BirthDate;
 
-            // Otherwise parse from text yyyy-MM-dd
+           
             if (string.IsNullOrWhiteSpace(dto.BirthDateText)) return null;
 
             if (DateTime.TryParseExact(

@@ -22,7 +22,7 @@ namespace Vanrise_Web.Data
 
                 using (var r = cmd.ExecuteReader())
                 {
-                    // delegate / Func mapping
+                    
                     return DeviceMapper.MapList(r, DeviceMapper.MapDevice);
                 }
             }
@@ -39,7 +39,7 @@ namespace Vanrise_Web.Data
                 con.Open();
                 using (var r = cmd.ExecuteReader())
                 {
-                    // delegate / Func mapping
+                   
                     return DeviceMapper.MapList(r, DeviceMapper.MapDevice);
                 }
             }

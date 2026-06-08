@@ -8,7 +8,7 @@ namespace Vanrise_Web.Data
 {
     public static class DeviceMapper
     {
-        // did delegate using Func
+        
         public static List<T> MapList<T>(
             IDataReader reader,
             Func<IDataRecord, T> mapper)
@@ -23,7 +23,7 @@ namespace Vanrise_Web.Data
             return list;
         }
 
-        // actual device mapper
+       
         public static DeviceDto MapDevice(IDataRecord r)
         {
             return new DeviceDto

@@ -6,7 +6,7 @@
 
 clientsReportApp.controller("ClientsReportController", function ($scope, $http) {
 
-    $scope.selectedType = ""; // "" => no filter (show all)
+    $scope.selectedType = ""; 
     $scope.rows = [];
 
     function load(type) {
@@ -18,7 +18,7 @@ clientsReportApp.controller("ClientsReportController", function ($scope, $http) 
             });
     }
 
-    // initial load => show all
+    
     load(null);
 
     $scope.search = function () {

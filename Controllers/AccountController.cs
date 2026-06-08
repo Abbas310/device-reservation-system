@@ -11,7 +11,7 @@ namespace Vanrise_Web.Controllers
     {
         private readonly UserRepository _repo = new UserRepository();
 
-        // GET: /Account/Login
+        
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -19,17 +19,17 @@ namespace Vanrise_Web.Controllers
             return View();
         }
 
-        // POST: /Account/Login
+        
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Login(string username, string password)
         {
             var user = _repo.GetByUsername(username);
 
-            // Verify hash
+            
             if (user != null && Crypto.VerifyHashedPassword(user.PasswordHash, password))
             {
-                // Create auth ticket and pack the Role into it
+                
                 var ticket = new FormsAuthenticationTicket(1, user.Username, DateTime.Now, DateTime.Now.AddDays(1), true, user.Role);
                 string encryptedTicket = FormsAuthentication.Encrypt(ticket);
                 var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
@@ -42,12 +42,12 @@ namespace Vanrise_Web.Controllers
             return View();
         }
 
-        // POST: /Account/Register
+        
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Register(string regUsername, string regPassword, string role)
         {
-            // Hash the password securely
+           
             string hash = Crypto.HashPassword(regPassword);
             string safeRole = role == "Editor" ? "Editor" : "ReadOnly";
 
@@ -62,7 +62,7 @@ namespace Vanrise_Web.Controllers
                 ViewBag.RegError = "Username already exists.";
             }
 
-            return View("Login"); // Return to the same view
+            return View("Login"); 
         }
 
         public ActionResult Logout()

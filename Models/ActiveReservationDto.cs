@@ -7,7 +7,7 @@ namespace Vanrise_Web.Models
 {
     public class ActiveReservationDto
     {
-        public int Id { get; set; }              // ReservationId
+        public int Id { get; set; }              
         public int PhoneNumberId { get; set; }
         public string PhoneNumber { get; set; }
     }

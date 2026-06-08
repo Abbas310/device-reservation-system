@@ -179,7 +179,7 @@ clientsApp.controller("ClientsController", function ($scope, $http, $modal, $tim
     };
 });
 
-/* ===== Add/Edit Client Modal ===== */
+
 clientsApp.controller("ClientModalController", function ($scope, $modalInstance, client, isEdit) {
 
     $scope.client = client;
@@ -200,12 +200,12 @@ clientsApp.controller("ClientModalController", function ($scope, $modalInstance,
         $scope.client.Name = ($scope.client.Name || "").trim();
         if (!$scope.client.Name) return;
 
-        if (!$scope.client.Type) return; // mandatory
+        if (!$scope.client.Type) return; 
 
         $scope.client.Type = parseInt($scope.client.Type, 10);
 
         if ($scope.client.Type === 1) {
-            if (!$scope.form.birthDateModel) return; // mandatory
+            if (!$scope.form.birthDateModel) return; 
 
             var d = ($scope.form.birthDateModel instanceof Date)
                 ? $scope.form.birthDateModel
@@ -226,7 +226,7 @@ clientsApp.controller("ClientModalController", function ($scope, $modalInstance,
     };
 });
 
-/* ===== Delete Client Modal ===== */
+
 clientsApp.controller("DeleteClientController", function ($scope, $modalInstance, client) {
     $scope.client = client;
 
@@ -234,7 +234,7 @@ clientsApp.controller("DeleteClientController", function ($scope, $modalInstance
     $scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 });
 
-/* ===== Reserve Modal ===== */
+
 clientsApp.controller("ReservePhoneController", function ($scope, $modalInstance, client) {
     $scope.client = client;
     $scope.reservation = { phoneNumberId: null };
@@ -243,7 +243,7 @@ clientsApp.controller("ReservePhoneController", function ($scope, $modalInstance
     $scope.cancel = function () { $modalInstance.dismiss("cancel"); };
 });
 
-/* ===== Unreserve Modal ===== */
+
 clientsApp.controller("UnreservePhoneController", function ($scope, $modalInstance, $http, client) {
     $scope.client = client;
     $scope.reservations = [];

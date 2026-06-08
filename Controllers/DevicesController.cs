@@ -12,21 +12,21 @@ namespace Vanrise_Web.Controllers
     {
         private readonly DeviceRepository _repo = new DeviceRepository();
 
-        // GET /api/devices
+        
         [HttpGet]
         public IEnumerable<DeviceDto> Get()
         {
             return _repo.GetAll();
         }
 
-        // GET /api/devices?search=iph
+      
         [HttpGet]
         public IEnumerable<DeviceDto> Get(string search)
         {
             return _repo.GetFiltered(search);
         }
 
-        // POST /api/devices
+       
         [HttpPost]
         public IHttpActionResult Post(DeviceDto dto)
         {
@@ -37,7 +37,7 @@ namespace Vanrise_Web.Controllers
             return Ok(device);
         }
 
-        // PUT /api/devices/5
+        
         [HttpPut]
         public IHttpActionResult Put(int id, DeviceDto dto)
         {
@@ -50,7 +50,7 @@ namespace Vanrise_Web.Controllers
             return Ok();
         }
 
-        // DELETE /api/devices/5
+        
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
@@ -59,7 +59,7 @@ namespace Vanrise_Web.Controllers
                 if (!_repo.Delete(id)) return NotFound();
                 return Ok();
             }
-            catch (SqlException ex) when (ex.Number == 547) // FK constraint
+            catch (SqlException ex) when (ex.Number == 547) 
             {
                 return BadRequest("Cannot delete this device because it is used by existing phone numbers (and/or reservations).");
             }

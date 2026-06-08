@@ -10,8 +10,7 @@ namespace Vanrise_Web.Controllers
         private readonly PhoneNumberReservationRepository _repo =
             new PhoneNumberReservationRepository();
 
-        // GET /api/phonenumberreservations
-        // GET /api/phonenumberreservations?clientId=1&phoneNumberId=2
+       
         [HttpGet]
         public IEnumerable<PhoneNumberReservationDto> Get(int? clientId = null, int? phoneNumberId = null)
         {
@@ -21,7 +20,7 @@ namespace Vanrise_Web.Controllers
             return _repo.GetFiltered(clientId, phoneNumberId);
         }
 
-        // GET /api/phonenumberreservations/active?clientId=1
+        
         [HttpGet]
         [Route("api/phonenumberreservations/active")]
         public IHttpActionResult Active(int clientId)
@@ -29,7 +28,7 @@ namespace Vanrise_Web.Controllers
             return Ok(_repo.GetActiveByClient(clientId));
         }
 
-        // POST /api/phonenumberreservations/reserve
+       
         [HttpPost]
         [Route("api/phonenumberreservations/reserve")]
         public IHttpActionResult Reserve(ReserveRequest req)
@@ -41,7 +40,7 @@ namespace Vanrise_Web.Controllers
             return Ok(new { Id = newId });
         }
 
-        // POST /api/phonenumberreservations/unreserve
+        
         [HttpPost]
         [Route("api/phonenumberreservations/unreserve")]
         public IHttpActionResult Unreserve(UnreserveRequest req)
@@ -56,7 +55,7 @@ namespace Vanrise_Web.Controllers
         }
     }
 
-    // Small request DTOs
+    
     public class ReserveRequest
     {
         public int ClientId { get; set; }

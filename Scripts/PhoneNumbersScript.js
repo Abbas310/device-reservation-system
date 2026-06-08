@@ -21,7 +21,7 @@ phoneApp.controller("PhoneController", function ($scope, $http, $modal) {
     $scope.search = function () {
         var num = ($scope.searchNumber || "").trim();
 
-        // if empty => null => API returns all
+       
         var dev = $scope.selectedDeviceId ? parseInt($scope.selectedDeviceId, 10) : null;
 
         $http.get("/api/phonenumbers", { params: { number: num, deviceId: dev } })
@@ -33,7 +33,7 @@ phoneApp.controller("PhoneController", function ($scope, $http, $modal) {
     };
 
     $scope.openEdit = function (p) {
-        // ensure edit mode has numeric id
+        
         var copy = angular.copy(p);
         copy.DeviceId = copy.DeviceId ? parseInt(copy.DeviceId, 10) : "";
         openModal(copy, true);
@@ -82,9 +82,9 @@ phoneApp.controller("PhoneController", function ($scope, $http, $modal) {
 
                     if (err && err.data) {
                         if (err.data.Message) {
-                            msg = err.data.Message;                 // JSON { Message: "..." }
+                            msg = err.data.Message;                 
                         } else if (typeof err.data === "string") {
-                            // If it's HTML, don't show it
+                            
                             msg = (err.data.trim().charAt(0) === "<")
                                 ? "Cannot delete because it is in use."
                                 : err.data;
@@ -102,8 +102,7 @@ phoneApp.controller("PhoneModalController", function ($scope, $modalInstance, ph
     $scope.phone = phone;
     $scope.isEdit = isEdit;
 
-    // IMPORTANT: do NOT default to first device.
-    // For Add, DeviceId stays empty until user selects.
+    
     if (!$scope.phone.DeviceId) {
         $scope.phone.DeviceId = "";
     }
@@ -112,7 +111,7 @@ phoneApp.controller("PhoneModalController", function ($scope, $modalInstance, ph
         $scope.phone.Number = ($scope.phone.Number || "").trim();
         if (!$scope.phone.Number) return;
 
-        // mandatory device selection
+       
         if (!$scope.phone.DeviceId) return;
 
         $modalInstance.close($scope.phone);

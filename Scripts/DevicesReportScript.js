@@ -7,7 +7,7 @@
 devicesReportApp.controller("DevicesReportController", function ($scope, $http) {
 
     $scope.selectedDeviceId = "";
-    $scope.selectedStatus = ""; // "reserved" | "unreserved" | ""
+    $scope.selectedStatus = ""; 
     $scope.rows = [];
 
     $scope.search = function () {
@@ -20,6 +20,6 @@ devicesReportApp.controller("DevicesReportController", function ($scope, $http) 
             });
     };
 
-    // optional initial load: show nothing until Search is pressed
+   
     $scope.rows = [];
 });

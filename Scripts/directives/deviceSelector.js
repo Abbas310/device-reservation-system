@@ -12,9 +12,9 @@
         return {
             restrict: "E",
             scope: {
-                ngModel: "=",        // selected DeviceId
-                includeAll: "@",     // "true" for filter dropdown
-                placeholder: "@"     // e.g. "Select device..."
+                ngModel: "=",        
+                includeAll: "@",     
+                placeholder: "@"    
             },
             template:
                 '<select class="form-control device-selector" ng-model="ngModel" ' +
@@ -25,13 +25,13 @@
             link: function (scope) {
                 scope.devices = [];
 
-                // placeholder logic
+                
                 scope.placeholderText = scope.placeholder || (scope.includeAll === "true" ? "All Devices" : "Select device...");
 
                 $http.get("/api/devices").then(function (res) {
                     scope.devices = res.data || [];
 
-                    // normalize numeric ids (edit mode)
+                    
                     if (scope.ngModel !== null && scope.ngModel !== undefined && scope.ngModel !== "") {
                         var n = parseInt(scope.ngModel, 10);
                         scope.ngModel = isNaN(n) ? "" : n;

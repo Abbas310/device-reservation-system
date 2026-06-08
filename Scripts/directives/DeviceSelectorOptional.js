@@ -21,7 +21,7 @@
                 scope.devices = [];
                 scope.ph = scope.placeholder || "-- Select Device --";
 
-                // IMPORTANT: keep empty by default (no auto-select)
+                
                 if (scope.ngModel === undefined || scope.ngModel === null) {
                     scope.ngModel = "";
                 }

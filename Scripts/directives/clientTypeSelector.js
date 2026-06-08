@@ -12,8 +12,8 @@
         return {
             restrict: "E",
             scope: {
-                ngModel: "=",      // selected type (1 or 2, or "" for All)
-                placeholder: "@"   // "All Types" or "Select type..."
+                ngModel: "=",      
+                placeholder: "@"   
             },
             template:
                 '<select class="form-control type-selector" ng-model="ngModel">' +
@@ -24,7 +24,7 @@
             link: function (scope) {
                 scope.placeholderText = scope.placeholder || "All Types";
 
-                // normalize edit mode values (string -> int)
+                
                 if (scope.ngModel !== null && scope.ngModel !== undefined && scope.ngModel !== "") {
                     var n = parseInt(scope.ngModel, 10);
                     scope.ngModel = isNaN(n) ? "" : n;

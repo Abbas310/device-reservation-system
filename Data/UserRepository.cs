@@ -55,7 +55,7 @@ namespace Vanrise_Web.Data
             }
             catch (SqlException)
             {
-                // Likely a unique constraint violation on Username
+                
                 return false;
             }
         }

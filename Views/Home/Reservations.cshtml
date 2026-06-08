@@ -46,14 +46,14 @@
         <div class="controls" style="margin-bottom:15px;">
 
 
-            <!-- optional: we will keep it simple now using existing list filter by ID -->
+            
             <select class="form-control" style="width:220px; display:inline-block; margin-left:6px;"
                     ng-model="selectedClientId"
                     ng-options="c.Id as c.Name for c in clients">
                 <option value="">All Clients</option>
             </select>
 
-            <!-- Phone number filter directive -->
+            
             <phone-number-selector ng-model="selectedPhoneNumberId" placeholder="All Phone Numbers"></phone-number-selector>
 
             <button type="button" class="btn btn-primary" style="margin-left:6px;" ng-click="search()">Search</button>
@@ -83,7 +83,7 @@
             </tbody>
         </table>
 
-        <!-- No Add / Edit buttons by requirement -->
+        
 
     </div>
 

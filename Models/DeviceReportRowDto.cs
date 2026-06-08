@@ -10,7 +10,7 @@ namespace Vanrise_Web.Models
     public class DeviceReportRowDto
     {
         public string DeviceName { get; set; }
-        public string Status { get; set; }   // "Reserved" / "Unreserved"
+        public string Status { get; set; }   
         public int Count { get; set; }
     }
 }

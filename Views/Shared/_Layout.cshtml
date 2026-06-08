@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <script>
-    // This tells AngularJS what role the logged-in user has
+    
     window.currentUserRole = '@(User.IsInRole("Editor") ? "Editor" : "ReadOnly")';
 </script>
 <body>

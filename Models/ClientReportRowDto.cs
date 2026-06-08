@@ -9,7 +9,7 @@ namespace Vanrise_Web.Models
 {
     public class ClientReportRowDto
     {
-        public int Type { get; set; }          // 1 or 2
-        public int ClientCount { get; set; }   // number of clients
+        public int Type { get; set; }        
+        public int ClientCount { get; set; }   
     }
 }

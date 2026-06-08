@@ -17,7 +17,7 @@ app.controller("DeviceController", function ($scope, $http, $modal) {
 
     loadAll();
 
-    // SEARCH (GET /api/devices?search=...)
+    
     $scope.searchDevices = function () {
         var s = ($scope.deviceName || "").trim();
         if (!s) { loadAll(); return; }
@@ -26,12 +26,12 @@ app.controller("DeviceController", function ($scope, $http, $modal) {
             .then(function (res) { $scope.filteredDevices = res.data; });
     };
 
-    // ADD
+    
     $scope.openAddModal = function () {
         openDeviceModal({ Id: null, Name: "" }, false);
     };
 
-    // EDIT
+    
     $scope.openEditModal = function (d) {
         openDeviceModal(angular.copy(d), true);
     };
@@ -48,18 +48,18 @@ app.controller("DeviceController", function ($scope, $http, $modal) {
 
         modalInstance.result.then(function (resultDevice) {
             if (!isEdit) {
-                // POST /api/devices
+                
                 $http.post("/api/devices", { Name: resultDevice.Name })
                     .then(function () { $scope.deviceName = ""; loadAll(); });
             } else {
-                // PUT /api/devices/{id}
+                
                 $http.put("/api/devices/" + resultDevice.Id, { Name: resultDevice.Name })
                     .then(function () { $scope.deviceName = ""; loadAll(); });
             }
         });
     }
 
-    // DELETE (open confirm modal -> DELETE /api/devices/{id})
+    
     $scope.openDeleteModal = function (d) {
         var modalInstance = $modal.open({
             templateUrl: "deleteConfirmModal.html",
